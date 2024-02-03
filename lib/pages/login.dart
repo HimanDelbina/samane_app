@@ -162,6 +162,7 @@ class _LoginState extends State<Login> {
         prefsUser.setBool('is_pm', result["is_pm"]);
         prefsUser.setBool('is_cartex', result["is_cartex"]);
         prefsUser.setBool('is_store_manager', result["is_store_manager"]);
+        prefsUser.setBool('is_agency', result["is_agency"]);
         prefsUser.setString('password', result["password"]);
 
         Navigator.push(

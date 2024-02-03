@@ -1,26 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:samane_app/model/agency_data_model.dart';
+import 'package:samane_app/model/agency_model.dart';
 import 'package:samane_app/static/url.dart';
-import '../model/users_model.dart';
 
-class GetAllUsers extends ChangeNotifier {
-  List<UsersModel> _map = [];
+class GetAgencyData extends ChangeNotifier {
+  List<AgencyDataModel> _map = [];
   bool _error = false;
   bool _refresh = false;
   String _errorMessage = "";
-  List<UsersModel> get map => _map;
+  List<AgencyDataModel> get map => _map;
   bool get error => _error;
   bool get refresh => _refresh;
   String get errorMessage => _errorMessage;
-  List<dynamic>? _items;
-  List<dynamic>? get items => _items;
 
   // var x = json.decode(response.body);
   // boperationList = x.map((e) => Boperation.fromJson(e)).toList();
-  Future<List<UsersModel>?> get fetchData async {
+  Future<List<AgencyDataModel>?> get fetchData async {
     _refresh = true;
     var response = await http.get(
-        Uri.parse(StaticUrlFile.url.toString() + "/company/get_all_user"),
+        Uri.parse(StaticUrlFile.url.toString() +
+            "/agency/get_agencyuser_all"),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
@@ -29,10 +29,10 @@ class GetAllUsers extends ChangeNotifier {
     if (response.statusCode == 200) {
       try {
         var x = response.body;
-        _map = usersModelFromJson(x);
+        _map = agencyDataModelFromJson(x);
         print(_map);
         // var x = json.decode(response.body);
-        // _map = x.map((e) => CartexModel.fromJson(e)).toList();
+        // _map = x.map((e) => AgencyModel.fromJson(e)).toList();
         _error = false;
         // _refresh = true;
       } catch (e) {
@@ -52,11 +52,6 @@ class GetAllUsers extends ChangeNotifier {
     _map = [];
     _error = false;
     _errorMessage = '';
-    notifyListeners();
-  }
-
-  void searchItems(String val) async {
-    _items = await _map;
     notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:provider/provider.dart';
 import 'package:samane_app/pages/driver/user_manager.dart';
@@ -153,13 +154,8 @@ class _DriverPageState extends State<DriverPage>
                                             height: my_height * 0.15,
                                             width: my_width,
                                             decoration: BoxDecoration(
-                                                color: value.map[index]
-                                                            .direction ==
-                                                        "R"
-                                                    ? Colors.red
-                                                        .withOpacity(0.1)
-                                                    : Colors.green
-                                                        .withOpacity(0.1),
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
                                                 borderRadius:
                                                     BorderRadius.circular(5.0)),
                                             child: Padding(
@@ -184,10 +180,39 @@ class _DriverPageState extends State<DriverPage>
                                                                 'برگشت از شرکت')
                                                             : const Text(
                                                                 'آمدن به شرکت'),
-                                                        Text(value
-                                                            .map[index].createAt
-                                                            .toString()
-                                                            .toPersianDate()),
+                                                        Row(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                          5.0),
+                                                              child: Text(value
+                                                                  .map[index]
+                                                                  .createAt
+                                                                  .toString()
+                                                                  .toPersianDate()),
+                                                            ),
+                                                            Icon(
+                                                              value.map[index]
+                                                                          .is_accept ==
+                                                                      false
+                                                                  ? IconlyLight
+                                                                      .close_square
+                                                                  : IconlyLight
+                                                                      .tick_square,
+                                                              color: value
+                                                                          .map[
+                                                                              index]
+                                                                          .is_accept ==
+                                                                      false
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .green,
+                                                            ),
+                                                          ],
+                                                        )
                                                       ],
                                                     ),
                                                   ),

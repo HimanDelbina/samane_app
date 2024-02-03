@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:samane_app/pages/agency/agency_accept_page.dart';
+import 'package:samane_app/pages/agency/agency_page.dart';
 import 'package:samane_app/pages/driver/driver_page.dart';
 import 'package:samane_app/provider/get_users.dart';
+import 'package:samane_app/provider/set_user_agency_list.dart';
 import '../../components/search_component.dart';
 import '../../provider/set_list_user.dart';
 import '../../static/user_driver_static.dart';
 
-class UserManager extends StatefulWidget {
-  const UserManager({super.key});
+class UserManagerAgency extends StatefulWidget {
+  const UserManagerAgency({super.key});
 
   @override
-  State<UserManager> createState() => _UserManagerState();
+  State<UserManagerAgency> createState() => _UserManagerState();
 }
 
-class _UserManagerState extends State<UserManager> {
+class _UserManagerState extends State<UserManagerAgency> {
   bool user_is_here = true;
   var show_data = [];
   var show_data_Search = [];
@@ -42,7 +45,8 @@ class _UserManagerState extends State<UserManager> {
     double my_height = MediaQuery.of(context).size.height;
     double my_width = MediaQuery.of(context).size.width;
     context.read<GetAllUsers>().fetchData;
-    SetUserList user_list = Provider.of<SetUserList>(context);
+    SetUserAgencyList user_list_agency =
+        Provider.of<SetUserAgencyList>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -82,12 +86,12 @@ class _UserManagerState extends State<UserManager> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                       ),
-                      itemCount: StaticUserDriverFile.user_list.length,
+                      itemCount: StaticUserDriverFile.user_list_agency.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            user_list.removeItem(
-                                StaticUserDriverFile.user_list[index]);
+                            user_list_agency.removeItem(
+                                StaticUserDriverFile.user_list_agency[index]);
                             // setState(() {
                             //   StaticUserDriverFile.user_list.remove(
                             //       StaticUserDriverFile.user_list[index]);
@@ -111,10 +115,11 @@ class _UserManagerState extends State<UserManager> {
                                           padding:
                                               const EdgeInsets.only(left: 7.0),
                                           child: Text(StaticUserDriverFile
-                                              .user_list[index].firstName),
+                                              .user_list_agency[index]
+                                              .firstName),
                                         ),
                                         Text(StaticUserDriverFile
-                                            .user_list[index].lastName),
+                                            .user_list_agency[index].lastName),
                                       ],
                                     ),
                                     const Icon(Icons.remove, color: Colors.red)
@@ -178,19 +183,21 @@ class _UserManagerState extends State<UserManager> {
                                               user_is_here = true;
                                             });
                                             if (StaticUserDriverFile
-                                                    .user_list.length ==
+                                                    .user_list_agency.length ==
                                                 0) {
-                                              user_list
+                                              user_list_agency
                                                   .addItem(show_data[index]);
                                             } else {
                                               for (var i = 0;
                                                   i <
                                                       StaticUserDriverFile
-                                                          .user_list.length;
+                                                          .user_list_agency
+                                                          .length;
                                                   i++) {
                                                 if (show_data[index].id ==
                                                     StaticUserDriverFile
-                                                        .user_list[i].id) {
+                                                        .user_list_agency[i]
+                                                        .id) {
                                                   setState(() {
                                                     user_is_here = false;
                                                   });
@@ -219,7 +226,7 @@ class _UserManagerState extends State<UserManager> {
                                                 }
                                               }
                                               if (user_is_here) {
-                                                user_list
+                                                user_list_agency
                                                     .addItem(show_data[index]);
                                                 // setState(() {
                                                 //   StaticUserDriverFile.user_list
@@ -279,7 +286,7 @@ class _UserManagerState extends State<UserManager> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DriverPage(),
+                        builder: (context) => const AgencyPage(),
                       ));
                 },
                 child: Container(

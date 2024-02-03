@@ -1,12 +1,70 @@
 import 'dart:convert';
 
-List<UsersModel> usersModelFromJson(String str) =>
-    List<UsersModel>.from(json.decode(str).map((x) => UsersModel.fromJson(x)));
+List<AgencyDataModel> agencyDataModelFromJson(String str) =>
+    List<AgencyDataModel>.from(
+        json.decode(str).map((x) => AgencyDataModel.fromJson(x)));
 
-String usersModelToJson(List<UsersModel> data) =>
+String agencyDataModelToJson(List<AgencyDataModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class UsersModel {
+class AgencyDataModel {
+  int id;
+  String direction;
+  DateTime createAt;
+  DateTime updateAt;
+  Agency agency;
+  List<User> users;
+
+  AgencyDataModel({
+    required this.id,
+    required this.direction,
+    required this.createAt,
+    required this.updateAt,
+    required this.agency,
+    required this.users,
+  });
+
+  factory AgencyDataModel.fromJson(Map<String, dynamic> json) =>
+      AgencyDataModel(
+        id: json["id"],
+        direction: json["direction"],
+        createAt: DateTime.parse(json["create_at"]),
+        updateAt: DateTime.parse(json["update_at"]),
+        agency: Agency.fromJson(json["agency"]),
+        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "direction": direction,
+        "create_at": createAt.toIso8601String(),
+        "update_at": updateAt.toIso8601String(),
+        "agency": agency.toJson(),
+        "users": List<dynamic>.from(users.map((x) => x.toJson())),
+      };
+}
+
+class Agency {
+  int id;
+  String title;
+
+  Agency({
+    required this.id,
+    required this.title,
+  });
+
+  factory Agency.fromJson(Map<String, dynamic> json) => Agency(
+        id: json["id"],
+        title: utf8.decode(json["title"].codeUnits),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+      };
+}
+
+class User {
   int id;
   String firstName;
   String lastName;
@@ -26,7 +84,7 @@ class UsersModel {
   DateTime createAt;
   DateTime updateAt;
 
-  UsersModel({
+  User({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -47,7 +105,7 @@ class UsersModel {
     required this.updateAt,
   });
 
-  factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         firstName: utf8.decode(json["first_name"].codeUnits),
         lastName: utf8.decode(json["last_name"].codeUnits),

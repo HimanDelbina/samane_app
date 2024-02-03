@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:samane_app/pages/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:samane_app/provider/get_cartex.dart';
+import 'provider/get_agency.dart';
+import 'provider/get_agency_data.dart';
+import 'provider/get_agency_history.dart';
 import 'provider/get_cartex_always.dart';
 import 'provider/get_cartex_temporary.dart';
 import 'provider/get_direction_data_wait.dart';
@@ -13,6 +16,7 @@ import 'provider/get_driver_user.dart';
 import 'provider/get_tell.dart';
 import 'provider/get_users.dart';
 import 'provider/set_list_user.dart';
+import 'provider/set_user_agency_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +53,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<GetDirectionWaitDriver>.value(
             value: GetDirectionWaitDriver()),
         ChangeNotifierProvider<SetUserList>.value(value: SetUserList()),
+        ChangeNotifierProvider<SetUserAgencyList>.value(value: SetUserAgencyList()),
+        ChangeNotifierProvider<GetAgencyData>.value(value: GetAgencyData()),
+        ChangeNotifierProvider<GetAgency>.value(value: GetAgency()),
+        ChangeNotifierProvider<GetAgencyHistory>.value(value: GetAgencyHistory()),
       ],
       child: MaterialApp(
         // scaffoldMessengerKey: _messangerKey,
